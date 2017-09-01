@@ -1,0 +1,89 @@
+<md-toolbar color="primary" id="toolbar">
+  <button id="menu" md-button [mdMenuTriggerFor]="menu">Menu</button>
+  <md-menu #menu="mdMenu">
+    <button md-menu-item>
+      <md-icon>note_add</md-icon>
+      <span>Create Todo</span>
+    </button>
+    <button md-menu-item>
+      <md-icon>view_headline</md-icon>
+      <span>Read Todos</span>
+    </button>
+  </md-menu>
+
+  <div class="right" style="float:right;">
+    <span id="title">Angular 4 Mean Starter - </span><span id="author">by Giacomo Cerquone</span>
+  </div>
+</md-toolbar>
+
+<h1 class="mat-display-1" style="margin-top:2em; text-align:center;">Create a Todo</h1>
+
+<md-card class="example-form">
+  <form>
+    <md-form-field class="example-full-width">
+      <input mdInput placeholder="Company (disabled)" disabled value="Google">
+    </md-form-field>
+
+    <table class="example-full-width" cellspacing="0">
+      <tr>
+        <td>
+          <md-form-field class="example-full-width">
+            <input mdInput placeholder="First name">
+          </md-form-field>
+        </td>
+        <td>
+          <md-form-field class="example-full-width">
+            <input mdInput placeholder="Long Last Name That Will Be Truncated">
+          </md-form-field>
+        </td>
+      </tr>
+    </table>
+
+    <p>
+      <md-form-field class="example-full-width">
+        <textarea mdInput placeholder="Address">1600 Amphitheatre Pkwy</textarea>
+      </md-form-field>
+      <md-form-field class="example-full-width">
+        <textarea mdInput placeholder="Address 2"></textarea>
+      </md-form-field>
+    </p>
+
+    <table class="example-full-width" cellspacing="0">
+      <tr>
+        <td>
+          <md-form-field class="example-full-width">
+            <input mdInput placeholder="City">
+          </md-form-field>
+        </td>
+        <td>
+          <md-form-field class="example-full-width">
+            <input mdInput placeholder="State">
+          </md-form-field>
+        </td>
+        <td>
+          <md-form-field class="example-full-width">
+            <input mdInput #postalCode maxlength="5" placeholder="Postal Code" value="94043">
+            <md-hint align="end">{{postalCode.value.length}} / 5</md-hint>
+          </md-form-field>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+  <md-card-actions>
+    <button md-button color="primary">Create</button>
+    <button md-button color="warn">Reset</button>
+  </md-card-actions>
+</md-card>
+
+<h1 class="mat-display-1" style="margin-top:2em; text-align:center;">Read Todos</h1>
+
+<md-card class="todo" *ngFor="let todo of todos">
+  <md-card-title>{{todo.title}}</md-card-title>
+  <md-card-content>
+    <p>{{todo.text}}</p>
+  </md-card-content>
+  <md-card-actions>
+    <button md-button color="warn">Delete</button>
+  </md-card-actions>
+</md-card>
