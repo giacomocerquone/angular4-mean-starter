@@ -41,4 +41,15 @@ router.get('/todos', function (req, res) {
   });
 });
 
+router.delete('/todo/:todoid', function (req, res) {
+  let todoId = req.params.todoid;
+
+  Todo.findByIdAndRemove(todoId, function (err, todo) {
+    if(err)
+      sendError(err, res);
+    response.data = 'Todo deleted'
+    res.json(response);
+  });
+});
+
 module.exports = router;

@@ -9,13 +9,31 @@ import { DataService } from './data.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Angular 4 Mean Starter Kit'
-  todos: Array<String> = [];
+  title = 'Angular 4 Mean Starter Kit';
+  todos: Array<Object> = [];
 
-  // Create an instance of the DataService through dependency injection
+  private todo: Object = {};
+
   constructor(private _dataService: DataService) {
-    // Access the Data Service's getUsers() method we defined
     this._dataService.getTodos()
       .subscribe(res => this.todos = res);
+  }
+
+  onSubmit() {
+    this._dataService.createTodo(this.todo)
+      .subscribe(res => {
+        this.todos.push(this.todo);
+        console.log(res);
+      });
+  }
+
+  onTodoDelete(todoId: String) {
+    this._dataService.deleteTodo(todoId)
+      .subscribe(res => {
+        this.todos = this.todos.filter( (todo: any) => {
+          return todo._id != todoId;
+        });
+        console.log(res)
+      });
   }
 }

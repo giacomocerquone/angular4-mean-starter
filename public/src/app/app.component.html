@@ -19,61 +19,20 @@
 <h1 class="mat-display-1" style="margin-top:2em; text-align:center;">Create a Todo</h1>
 
 <md-card class="example-form">
-  <form>
+  <form (ngSubmit)="onSubmit()" #todoForm="ngForm">
     <md-form-field class="example-full-width">
-      <input mdInput placeholder="Company (disabled)" disabled value="Google">
+      <input mdInput [(ngModel)]="todo.title" name="title" placeholder="Todo's title">
     </md-form-field>
 
-    <table class="example-full-width" cellspacing="0">
-      <tr>
-        <td>
-          <md-form-field class="example-full-width">
-            <input mdInput placeholder="First name">
-          </md-form-field>
-        </td>
-        <td>
-          <md-form-field class="example-full-width">
-            <input mdInput placeholder="Long Last Name That Will Be Truncated">
-          </md-form-field>
-        </td>
-      </tr>
-    </table>
+    <md-form-field class="example-full-width">
+      <input mdInput [(ngModel)]="todo.text" name="text" placeholder="Todo's text" />
+    </md-form-field>
 
-    <p>
-      <md-form-field class="example-full-width">
-        <textarea mdInput placeholder="Address">1600 Amphitheatre Pkwy</textarea>
-      </md-form-field>
-      <md-form-field class="example-full-width">
-        <textarea mdInput placeholder="Address 2"></textarea>
-      </md-form-field>
-    </p>
-
-    <table class="example-full-width" cellspacing="0">
-      <tr>
-        <td>
-          <md-form-field class="example-full-width">
-            <input mdInput placeholder="City">
-          </md-form-field>
-        </td>
-        <td>
-          <md-form-field class="example-full-width">
-            <input mdInput placeholder="State">
-          </md-form-field>
-        </td>
-        <td>
-          <md-form-field class="example-full-width">
-            <input mdInput #postalCode maxlength="5" placeholder="Postal Code" value="94043">
-            <md-hint align="end">{{postalCode.value.length}} / 5</md-hint>
-          </md-form-field>
-        </td>
-      </tr>
-    </table>
+    <md-card-actions>
+      <button type="submit" md-button color="primary">Create</button>
+      <button type="reset" md-button color="warn">Reset</button>
+    </md-card-actions>
   </form>
-
-  <md-card-actions>
-    <button md-button color="primary">Create</button>
-    <button md-button color="warn">Reset</button>
-  </md-card-actions>
 </md-card>
 
 <h1 class="mat-display-1" style="margin-top:2em; text-align:center;">Read Todos</h1>
@@ -83,7 +42,7 @@
   <md-card-content>
     <p>{{todo.text}}</p>
   </md-card-content>
-  <md-card-actions>
-    <button md-button color="warn">Delete</button>
-  </md-card-actions>
+    <md-card-actions>
+      <button (click)="onTodoDelete(todo._id)" md-button color="warn">Delete</button>
+    </md-card-actions>
 </md-card>
