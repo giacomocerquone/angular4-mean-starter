@@ -59,19 +59,21 @@ app.use(expressValidator());
 app.use('/api/v1', api);
 
 /**
- * Error Handler.
- */
-app.use(errorHandler());
+* Catch all the routes and give back the Angular app
+*/
+if (process.env.NODE_ENV === 'production') {
+ app.use(express.static('./public/dist/'));
+ app.get('*', (req, res) => {
+   res.sendFile(path.join(__dirname, './public/dist/index.html'));
+ });
+}
 
 /**
- * Catch all the routes and give back the Angular app
+ * Error Handler.
  */
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('./public/dist/'));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, './public/dist/index.html'));
-  });
-}
+ if (process.env.NODE_ENV === 'development') {
+   app.use(errorhandler())
+ }
 
 /**
  * Start Express server.
