@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 const express = require('express');
+const passport = require('passport');
 const helmet = require('helmet');
 const compression = require('compression');
 const bodyParser = require('body-parser');
@@ -12,13 +13,21 @@ const dotenv = require('dotenv');
 const path = require('path');
 const mongoose = require('mongoose');
 const expressValidator = require('express-validator');
-const expressStatusMonitor = require('express-status-monitor');
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured only if NODE_ENV var is set to production.
  */
-dotenv.config({ silent: process.env.NODE_ENV === 'production' });
-dotenv.load({ path: '.env' });
+dotenv.config({
+  silent: process.env.NODE_ENV === 'production'
+});
+dotenv.load({
+  path: '.env'
+});
+
+/**
+ * Passport configuration module for strategies
+ */
+const passportConfig = require('./config/passport');
 
 /**
  * Controllers (route handlers).
@@ -34,7 +43,7 @@ const app = express();
  * Connect to MongoDB.
  */
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI);
+mongoose.connect(process.env.MONGODB_URI || process.env.MONGOLAB_URI, {useMongoClient: true});
 mongoose.connection.on('error', (err) => {
   console.error(err);
   console.log('%s MongoDB connection error. Please make sure MongoDB is running.', chalk.red('✗'));
@@ -46,11 +55,12 @@ mongoose.connection.on('error', (err) => {
  */
 app.set('port', process.env.PORT || 3000);
 app.use(helmet())
-app.use(expressStatusMonitor());
 app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.use(expressValidator());
 
 /**
@@ -59,21 +69,29 @@ app.use(expressValidator());
 app.use('/api/v1', api);
 
 /**
-* Catch all the routes and give back the Angular app
-*/
-if (process.env.NODE_ENV === 'production') {
- app.use(express.static('./public/dist/'));
- app.get('*', (req, res) => {
-   res.sendFile(path.join(__dirname, './public/dist/index.html'));
- });
+ * Error Handler.
+ */
+if (process.env.NODE_ENV === 'development') {
+  app.use(errorhandler())
 }
 
 /**
- * Error Handler.
+ * Catch all the routes and give back the Angular app
  */
- if (process.env.NODE_ENV === 'development') {
-   app.use(errorhandler())
- }
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('./public/dist/'));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/dist/index.html'));
+  });
+}
+
+app.use(function (err, req, res, next) {
+  if (err.name === 'UnauthorizedError') {
+    res.status(401).json({
+      "message": err.name + ": " + err.message
+    });
+  }
+});
 
 /**
  * Start Express server.
