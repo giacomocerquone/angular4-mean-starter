@@ -6,16 +6,6 @@
   margin-bottom: 2em;
 }
 
-.todo {
-  width: 40%;
-  margin: 2em auto;
-}
-
-.example-form {
-  width: 40%;
-  margin: auto;
-}
-
-.example-full-width {
-  width: 100%
+.left {
+  margin-right: auto;
 }

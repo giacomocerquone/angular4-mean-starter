@@ -1,0 +1,11 @@
+<h1 class="mat-display-1" style="margin-top:2em; text-align:center;">Read Todos</h1>
+
+<mat-card *ngFor="let todo of todos">
+  <mat-card-title>{{todo.title}}</mat-card-title>
+  <mat-card-content>
+    <p>{{todo.text}}</p>
+  </mat-card-content>
+    <mat-card-actions>
+      <button (click)="onTodoDelete(todo._id)" mat-button color="warn">Delete</button>
+    </mat-card-actions>
+</mat-card>

@@ -7,27 +7,33 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HttpModule } from '@angular/http';
 import { FormsModule }   from '@angular/forms';
-import { DataService } from './data.service';
+import { RouterModule } from '@angular/router';
 
-import { MdInputModule, MdCardModule, MdButtonModule, MdToolbarModule, MdMenuModule, MdIconModule } from '@angular/material';
-import { TodoFormComponent } from './Todos/todo-form/todo-form.component';
+import { DataService } from './Todos/Services/data.service';
+import { AppRoutes } from './app.routes';
+
+import { MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule, MatMenuModule, MatIconModule } from '@angular/material';
+import { TodoFormComponent } from './Todos/Components/todo-form/todo-form.component';
+import { TodoListComponent } from './Todos/Components/todo-list/todo-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TodoFormComponent
+    TodoFormComponent,
+    TodoListComponent
   ],
   imports: [
     BrowserModule,
+    RouterModule.forRoot(AppRoutes),
     HttpModule,
     FormsModule,
     BrowserAnimationsModule,
-    MdInputModule,
-    MdCardModule,
-    MdButtonModule,
-    MdToolbarModule,
-    MdMenuModule,
-    MdIconModule
+    MatInputModule,
+    MatCardModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatIconModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent]

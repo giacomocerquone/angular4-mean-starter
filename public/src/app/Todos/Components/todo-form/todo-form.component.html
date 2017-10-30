@@ -1,0 +1,18 @@
+<h1 class="mat-display-1" style="margin-top:2em; text-align:center;">Create a Todo</h1>
+
+<mat-card>
+  <form (ngSubmit)="onSubmit()" #todoForm="ngForm">
+    <mat-form-field class="example-full-width">
+      <input matInput [(ngModel)]="todo.title" name="title" placeholder="Todo's title">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input matInput [(ngModel)]="todo.text" name="text" placeholder="Todo's text" />
+    </mat-form-field>
+
+    <mat-card-actions>
+      <button type="submit" mat-button color="primary">Create</button>
+      <button type="reset" mat-button color="warn">Reset</button>
+    </mat-card-actions>
+  </form>
+</mat-card>
