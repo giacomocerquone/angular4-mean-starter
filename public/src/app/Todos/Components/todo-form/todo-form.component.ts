@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 // Import the DataService
 import { DataService } from './../../Services/data.service';
 
+import { Todo } from './../../Model/Todo';
+
 @Component({
   selector: 'todo-form',
   templateUrl: './todo-form.component.html',
@@ -10,8 +12,11 @@ import { DataService } from './../../Services/data.service';
 })
 export class TodoFormComponent implements OnInit {
 
-  todos: Array<Object> = [];
-  private todo: Object = {};
+  todos: Array<Todo> = [];
+  todo: Todo = {
+    title: '',
+    text: ''
+  };
 
   constructor(private _dataService: DataService) {
     this._dataService.getTodos()
