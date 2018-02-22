@@ -72,7 +72,7 @@ app.use('/api/v1', api);
  * Error Handler.
  */
 if (process.env.NODE_ENV === 'development') {
-  app.use(errorhandler())
+  app.use(errorHandler())
 }
 
 /**
